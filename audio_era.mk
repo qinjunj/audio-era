@@ -10,7 +10,7 @@ AUDIO_ERA = $(ESP_ROOT)/soft/ariane/audio-era
 AUDIO_PIPELINE = $(ESP_ROOT)/soft/ariane/audio-era/src/audio-pipeline
 MINI_ERA = $(ESP_ROOT)/soft/ariane/audio-era/src/mini-era
 
-audio-era: audio-era-distclean $(AUDIO_ERA_BUILD)/prom.srec $(AUDIO_ERA_BUILD)/ram.srec $(AUDIO_ERA_BUILD)/prom.bin $(AUDIO_ERA_BUILD)/audio-era.bin
+audio-era: audio-era-distclean $(AUDIO_ERA_BUILD)/prom.srec $(AUDIO_ERA_BUILD)/ram.srec $(AUDIO_ERA_BUILD)/prom.bin $(AUDIO_ERA_BUILD)/audio_era.bin
 
 audio-era-distclean: audio-era-clean
 
