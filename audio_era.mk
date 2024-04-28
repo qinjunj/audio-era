@@ -235,7 +235,7 @@ OBJ =	$(AUDIO_ERA_BUILD)/get_counter.o \
 $(AUDIO_ERA_BUILD)/audio_era.exe: $(AUDIO_ERA)/src/main.cpp $(AUDIO_SRCS) $(MINI_ERA_SRCS) $(OBJ) $(AUDIO_ERA_BUILD)/uart.o
 	@mkdir -p $(AUDIO_ERA_BUILD)
 	$(QUIET_CC) $(CROSS_COMPILE_ELF)gcc $(RISCV_CFLAGS) $(ADDN_RISCV_CFLAGS) $(SPX_CFLAGS) \
-	$(MINI_ERA_SRCS)/crt.S  \
+	$(MINI_ERA)/crt.S  \
 	$(SOFT)/common/syscalls.c \
 	-T $(RISCV_TESTS)/benchmarks/common/test.ld -o $@ \
 	$(OBJ) \
