@@ -119,23 +119,23 @@ bit_reverse (float * w, unsigned int N, unsigned int bits)
 }
 
 //sin
-double sin(double x)
-{
-	int i = 1;
-	double cur = x;
-	double acc = 1;
-	double fact= 1;
-	double pow = x;
-	while (fabs(acc) > .00000001 &&   i < 100){
-		fact *= ((2*i)*(2*i+1));
-		pow *= -1 * x*x;
-		acc =  pow / fact;
-		cur += acc;
-		i++;
-	}
-	return cur;
+// double sin(double x)
+// {
+// 	int i = 1;
+// 	double cur = x;
+// 	double acc = 1;
+// 	double fact= 1;
+// 	double pow = x;
+// 	while (fabs(acc) > .00000001 &&   i < 100){
+// 		fact *= ((2*i)*(2*i+1));
+// 		pow *= -1 * x*x;
+// 		acc =  pow / fact;
+// 		cur += acc;
+// 		i++;
+// 	}
+// 	return cur;
 
-}
+// }
 
 int
 fft(float * data, unsigned int N, unsigned int logn, int sign)
