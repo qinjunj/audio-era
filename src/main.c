@@ -3,7 +3,6 @@
 #include <string.h>
 
 #include "kernels_api.h"
-#include "get_counter.h"
 #include <audio.hpp>
 
 // Compiler arguments (passed through audio_pipeline.mk):

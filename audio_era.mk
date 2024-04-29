@@ -231,14 +231,14 @@ OBJ =	$(AUDIO_ERA_BUILD)/get_counter.o \
 		$(AUDIO_ERA_BUILD)/viterbi_parms.o \
 		$(AUDIO_ERA_BUILD)/viterbi_flat.o
 
-$(AUDIO_ERA_BUILD)/audio_era.exe: $(AUDIO_ERA)/src/main.cpp $(AUDIO_SRCS) $(MINI_ERA_SRCS) $(OBJ) $(AUDIO_ERA_BUILD)/uart.o
+$(AUDIO_ERA_BUILD)/audio_era.exe: $(AUDIO_ERA)/src/main.c $(AUDIO_SRCS) $(MINI_ERA_SRCS) $(OBJ) $(AUDIO_ERA_BUILD)/uart.o
 	@mkdir -p $(AUDIO_ERA_BUILD)
-	$(QUIET_CC) $(CROSS_COMPILE_ELF)gcc $(RISCV_CPPFLAGS) $(ADDN_RISCV_CFLAGS) $(SPX_CFLAGS) \
+	$(QUIET_CC) $(CROSS_COMPILE_ELF)gcc $(RISCV_CFLAGS) $(RISCV_CPPFLAGS) $(ADDN_RISCV_CFLAGS) $(SPX_CFLAGS) \
 	$(MINI_ERA)/crt.S  \
 	$(SOFT)/common/syscalls.c \
 	-T $(RISCV_TESTS)/benchmarks/common/test.ld -o $@ \
 	$(OBJ) \
-	$(AUDIO_ERA_BUILD)/uart.o $(AUDIO_SRCS) $(MINI_ERA_SRCS) $(AUDIO_ERA)/src/main.cpp \
+	$(AUDIO_ERA_BUILD)/uart.o $(AUDIO_SRCS) $(MINI_ERA_SRCS) $(AUDIO_ERA)/src/main.c \
 	$(SOFT_BUILD)/drivers/probe/libprobe.a \
 	$(SOFT_BUILD)/drivers/utils/baremetal/libutils.a
 
