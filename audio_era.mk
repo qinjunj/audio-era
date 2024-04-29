@@ -96,7 +96,6 @@ RISCV_CFLAGS += -I$(RISCV_TESTS)/benchmarks/common
 RISCV_CFLAGS += -I$(BOOTROM_PATH)
 RISCV_CFLAGS += -mcmodel=medany
 RISCV_CFLAGS += -static
-RISCV_CFLAGS += -std=gnu99
 RISCV_CFLAGS += -O2
 RISCV_CFLAGS += -ffast-math
 RISCV_CFLAGS += -fno-common
@@ -161,6 +160,7 @@ RISCV_CFLAGS += -DDO_FFT_IFFT_OFFLOAD=$(DO_FFT_IFFT_OFFLOAD)
 RISCV_CFLAGS += -DEPOCHS_TARGET=$(EPOCHS_TARGET)
 
 RISCV_CPPFLAGS += $(RISCV_CFLAGS)
+RISCV_CFLAGS += -std=gnu99
 
 AUDIO_SRCS = \
 	$(AUDIO_PIPELINE)/AudioBase.cpp \
@@ -233,7 +233,7 @@ OBJ =	$(AUDIO_ERA_BUILD)/get_counter.o \
 
 $(AUDIO_ERA_BUILD)/audio_era.exe: $(AUDIO_ERA)/src/main.cpp $(AUDIO_SRCS) $(MINI_ERA_SRCS) $(OBJ) $(AUDIO_ERA_BUILD)/uart.o
 	@mkdir -p $(AUDIO_ERA_BUILD)
-	$(QUIET_CC) $(CROSS_COMPILE_ELF)gcc $(RISCV_CFLAGS) $(ADDN_RISCV_CFLAGS) $(SPX_CFLAGS) \
+	$(QUIET_CC) $(CROSS_COMPILE_ELF)gcc $(RISCV_CPPFLAGS) $(ADDN_RISCV_CFLAGS) $(SPX_CFLAGS) \
 	$(MINI_ERA)/crt.S  \
 	$(SOFT)/common/syscalls.c \
 	-T $(RISCV_TESTS)/benchmarks/common/test.ld -o $@ \
