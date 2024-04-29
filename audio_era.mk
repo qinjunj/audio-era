@@ -185,7 +185,7 @@ MINI_ERA_SRCS = \
 
 
 # Compile utility functions for mini-era
-$(AUDIO_ERA_BUILD)/get_counter.o: $(AUDIO_ERA)/src/mini-era/get_counter.c
+$(AUDIO_ERA_BUILD)/read_trace.o: $(AUDIO_ERA)/src/mini-era/read_trace.c
 	@mkdir -p $(AUDIO_ERA_BUILD)
 	$(QUIET_CC) $(CROSS_COMPILE_ELF)gcc \
 		-O2 \
@@ -196,7 +196,7 @@ $(AUDIO_ERA_BUILD)/get_counter.o: $(AUDIO_ERA)/src/mini-era/get_counter.c
 		-I$(DESIGN_PATH)/$(ESP_CFG_BUILD) \
 		-c $< -o $@
 
-$(AUDIO_ERA_BUILD)/descrambler_function.o: $(AUDIO_ERA)/src/mini-era/descrambler_function.c
+$(AUDIO_ERA_BUILD)/calculate_dist_from_fmcw.o: $(AUDIO_ERA)/src/mini-era/calculate_dist_from_fmcw.c
 	@mkdir -p $(AUDIO_ERA_BUILD)
 	$(QUIET_CC) $(CROSS_COMPILE_ELF)gcc \
 		-O2 \
@@ -206,9 +206,39 @@ $(AUDIO_ERA_BUILD)/descrambler_function.o: $(AUDIO_ERA)/src/mini-era/descrambler
 		-I$(DESIGN_PATH)/$(ESP_CFG_BUILD) \
 		-c $< -o $@
 
-$(AUDIO_ERA_BUILD)/viterbi_flat.o: $(AUDIO_ERA)/src/mini-era/viterbi_flat.c
+$(AUDIO_ERA_BUILD)/fft.o: $(AUDIO_ERA)/src/mini-era/fft.c
 	@mkdir -p $(AUDIO_ERA_BUILD)
 	$(QUIET_CC) $(CROSS_COMPILE_ELF)gcc $(RISCV_CFLAGS) $(ADDN_RISCV_CFLAGS) \
+		-O2 \
+		-mcmodel=medany -mexplicit-relocs $(SPX_CFLAGS) \
+		-I$(AUDIO_ERA)/include/mini-era \
+		-I$(BOOTROM_PATH) \
+		-I$(DESIGN_PATH)/$(ESP_CFG_BUILD) \
+		-c $< -o $@
+
+$(AUDIO_ERA_BUILD)/kernels_api.o: $(AUDIO_ERA)/src/mini-era/kernels_api.c
+	@mkdir -p $(AUDIO_ERA_BUILD)
+	$(QUIET_CC) $(CROSS_COMPILE_ELF)gcc \
+		-O2 \
+		-mcmodel=medany -mexplicit-relocs $(SPX_CFLAGS) \
+		-I$(AUDIO_ERA)/include/mini-era \
+		-I$(BOOTROM_PATH) \
+		-I$(DESIGN_PATH)/$(ESP_CFG_BUILD) \
+		-c $< -o $@
+
+$(AUDIO_ERA_BUILD)/get_counter.o: $(AUDIO_ERA)/src/mini-era/get_counter.c
+	@mkdir -p $(AUDIO_ERA_BUILD)
+	$(QUIET_CC) $(CROSS_COMPILE_ELF)gcc \
+		-O2 \
+		-mcmodel=medany -mexplicit-relocs $(SPX_CFLAGS) \
+		-I$(AUDIO_ERA)/include/mini-era \
+		-I$(BOOTROM_PATH) \
+		-I$(DESIGN_PATH)/$(ESP_CFG_BUILD) \
+		-c $< -o $@
+
+$(AUDIO_ERA_BUILD)/descrambler_function.o: $(AUDIO_ERA)/src/mini-era/descrambler_function.c
+	@mkdir -p $(AUDIO_ERA_BUILD)
+	$(QUIET_CC) $(CROSS_COMPILE_ELF)gcc \
 		-O2 \
 		-mcmodel=medany -mexplicit-relocs $(SPX_CFLAGS) \
 		-I$(AUDIO_ERA)/include/mini-era \
@@ -226,19 +256,33 @@ $(AUDIO_ERA_BUILD)/viterbi_parms.o: $(AUDIO_ERA)/src/mini-era/viterbi_parms.c
 		-I$(DESIGN_PATH)/$(ESP_CFG_BUILD) \
 		-c $< -o $@
 
-OBJ =	$(AUDIO_ERA_BUILD)/get_counter.o \
+$(AUDIO_ERA_BUILD)/viterbi_flat.o: $(AUDIO_ERA)/src/mini-era/viterbi_flat.c
+	@mkdir -p $(AUDIO_ERA_BUILD)
+	$(QUIET_CC) $(CROSS_COMPILE_ELF)gcc \
+		-O2 \
+		-mcmodel=medany -mexplicit-relocs $(SPX_CFLAGS) \
+		-I$(AUDIO_ERA)/include/mini-era \
+		-I$(BOOTROM_PATH) \
+		-I$(DESIGN_PATH)/$(ESP_CFG_BUILD) \
+		-c $< -o $@
+
+OBJ =	$(AUDIO_ERA_BUILD)/read_trace.o \
+		$(AUDIO_ERA_BUILD)/calculate_dist_from_fmcw.o \
+		$(AUDIO_ERA_BUILD)/fft.o \
+		$(AUDIO_ERA_BUILD)/kernels_api.o \
+		$(AUDIO_ERA_BUILD)/get_counter.o \
 		$(AUDIO_ERA_BUILD)/descrambler_function.o \
 		$(AUDIO_ERA_BUILD)/viterbi_parms.o \
 		$(AUDIO_ERA_BUILD)/viterbi_flat.o
 
-$(AUDIO_ERA_BUILD)/audio_era.exe: $(AUDIO_ERA)/src/main.c $(AUDIO_SRCS) $(MINI_ERA_SRCS) $(OBJ) $(AUDIO_ERA_BUILD)/uart.o
+$(AUDIO_ERA_BUILD)/audio_era.exe: $(AUDIO_ERA)/src/main.cpp $(AUDIO_SRCS) $(OBJ) $(AUDIO_ERA_BUILD)/uart.o
 	@mkdir -p $(AUDIO_ERA_BUILD)
-	$(QUIET_CC) $(CROSS_COMPILE_ELF)gcc $(RISCV_CFLAGS) $(RISCV_CPPFLAGS) $(ADDN_RISCV_CFLAGS) $(SPX_CFLAGS) \
+	$(QUIET_CC) $(CROSS_COMPILE_ELF)gcc $(RISCV_CPPFLAGS) $(ADDN_RISCV_CFLAGS) $(SPX_CFLAGS) \
 	$(MINI_ERA)/crt.S  \
 	$(SOFT)/common/syscalls.c \
 	-T $(RISCV_TESTS)/benchmarks/common/test.ld -o $@ \
 	$(OBJ) \
-	$(AUDIO_ERA_BUILD)/uart.o $(AUDIO_SRCS) $(MINI_ERA_SRCS) $(AUDIO_ERA)/src/main.c \
+	$(AUDIO_ERA_BUILD)/uart.o $(AUDIO_SRCS) $(AUDIO_ERA)/src/main.c \
 	$(SOFT_BUILD)/drivers/probe/libprobe.a \
 	$(SOFT_BUILD)/drivers/utils/baremetal/libutils.a
 
