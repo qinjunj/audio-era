@@ -181,7 +181,6 @@ MINI_ERA_SRCS = \
 	$(MINI_ERA)/read_trace.c \
 	$(MINI_ERA)/calculate_dist_from_fmcw.c \
 	$(MINI_ERA)/fft.c \
-	$(MINI_ERA)/main.c \
 	$(MINI_ERA)/kernels_api.c 
 
 

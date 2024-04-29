@@ -365,7 +365,7 @@ status_t init_rad_kernel()
     iowrite32(fft_sense_dev, SENSOR_DMA_RD_SIZE_REG, sample_words);
     iowrite32(fft_sense_dev, SENSOR_DMA_SRC_OFFSET_REG, 0);
 
-    // Start a_ccelerators
+    // Start accelerators
     // printf("  Start...\n");
     iowrite32(fft_sense_dev, CMD_REG, CMD_MASK_START);
 
@@ -931,7 +931,7 @@ radar_dict_entry_t* iterate_rad_kernel(vehicle_state_t vs)
   iowrite32(fft_sense_dev, SENSOR_DMA_WR_SIZE_REG, sample_words);
   iowrite32(fft_sense_dev, SENSOR_DMA_DST_OFFSET_REG, 0);
 
-  // Start a_ccelerators
+  // Start accelerators
   // printf("  Start... tr_val = %d\n", tr_val);
   iowrite32(fft_sense_dev, CMD_REG, CMD_MASK_START);
 
