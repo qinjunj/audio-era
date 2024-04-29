@@ -14,12 +14,13 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+#include <stdbool.h>
 
 #ifndef H_BASE_TYPES_H
 #define H_BASE_TYPES_H
 
 /* Types definitions */
-typedef enum {false, true} bool_t;
+typedef enum {BOOL_FALSE = 0, BOOL_TRUE = 1} bool_t;
 typedef enum {error, success} status_t;
 
 #endif

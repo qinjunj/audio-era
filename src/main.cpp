@@ -2,9 +2,9 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include "mini-era/kernels_api.h"
+#include "kernels_api.h"
 
-#include <audio-pipeline/audio.hpp>
+#include <audio.hpp>
 
 // Compiler arguments (passed through audio_pipeline.mk):
 // NUM_BLOCKS: Number of audio blocks (16)
@@ -88,7 +88,7 @@ extern uint64_t bitrev_intvl;
 
 extern unsigned use_device_number;
 
-bool_t all_obstacle_lanes_mode = false;
+bool_t all_obstacle_lanes_mode = BOOL_FALSE;
 
 unsigned time_step = 0;         // The number of elapsed time steps
 unsigned max_time_steps = 5000; // The max time steps to simulate (default to 5000)
@@ -287,7 +287,7 @@ int main(int argc, char **argv) {
         *  - Lane: center
         *  - Speed: 50 mph
         */
-        vehicle_state.active  = true;
+        vehicle_state.active  = BOOL_TRUE;
         vehicle_state.lane    = center;
         vehicle_state.speed   = 50;
         SIM_DEBUG(printf("Vehicle starts with the following state: active: %u lane %u speed %d\n", vehicle_state.active, vehicle_state.lane, (int) vehicle_state.speed));
@@ -404,7 +404,7 @@ int main(int argc, char **argv) {
             #endif
             {
             for (int mi = 0; mi < num_vit_msgs; mi++) {
-                post_execute_vit_kernel(vdentry_p->msg_id, message);
+                post_execute_vit_kernel(static_cast<message_t>(vdentry_p->msg_id), message);
             }
             // printf("  eeeee\n");
             }

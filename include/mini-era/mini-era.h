@@ -4,6 +4,8 @@
 #include <esp_accelerator.h>
 #include <esp_probe.h>
 
+#ifndef SPANDEX_CONFIG_T
+#define SPANDEX_CONFIG_T
 typedef union
 {
   struct
@@ -20,6 +22,7 @@ typedef union
   };
   uint32_t spandex_reg;
 } spandex_config_t;
+#endif
 
 struct vitdodec_access {
 	uint8_t run;

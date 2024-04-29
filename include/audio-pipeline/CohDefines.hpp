@@ -4,6 +4,8 @@
 #include <DataType.hpp>
 
 // Helper unions for Spandex register and coalescing.
+#ifndef SPANDEX_CONFIG_T
+#define SPANDEX_CONFIG_T
 typedef union
 {
   struct
@@ -20,6 +22,7 @@ typedef union
   };
   unsigned int spandex_reg;
 } spandex_config_t;
+#endif
 
 typedef union
 {
