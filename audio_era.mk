@@ -187,7 +187,7 @@ MINI_ERA_SRCS = \
 # Compile utility functions for mini-era
 $(AUDIO_ERA_BUILD)/read_trace.o: $(AUDIO_ERA)/src/mini-era/read_trace.c
 	@mkdir -p $(AUDIO_ERA_BUILD)
-	$(QUIET_CC) $(CROSS_COMPILE_ELF)gcc \
+	$(QUIET_CC) $(CROSS_COMPILE_ELF)gcc $(RISCV_CFLAGS) \
 		-O2 \
 		-Wall -Werror \
 		-mcmodel=medany -mexplicit-relocs $(SPX_CFLAGS) \
@@ -198,7 +198,7 @@ $(AUDIO_ERA_BUILD)/read_trace.o: $(AUDIO_ERA)/src/mini-era/read_trace.c
 
 $(AUDIO_ERA_BUILD)/calculate_dist_from_fmcw.o: $(AUDIO_ERA)/src/mini-era/calculate_dist_from_fmcw.c
 	@mkdir -p $(AUDIO_ERA_BUILD)
-	$(QUIET_CC) $(CROSS_COMPILE_ELF)gcc \
+	$(QUIET_CC) $(CROSS_COMPILE_ELF)gcc $(RISCV_CFLAGS) \
 		-O2 \
 		-mcmodel=medany -mexplicit-relocs $(SPX_CFLAGS) \
 		-I$(AUDIO_ERA)/include/mini-era \
@@ -208,7 +208,7 @@ $(AUDIO_ERA_BUILD)/calculate_dist_from_fmcw.o: $(AUDIO_ERA)/src/mini-era/calcula
 
 $(AUDIO_ERA_BUILD)/fft.o: $(AUDIO_ERA)/src/mini-era/fft.c
 	@mkdir -p $(AUDIO_ERA_BUILD)
-	$(QUIET_CC) $(CROSS_COMPILE_ELF)gcc $(RISCV_CFLAGS) $(ADDN_RISCV_CFLAGS) \
+	$(QUIET_CC) $(CROSS_COMPILE_ELF)gcc $(RISCV_CFLAGS) \
 		-O2 \
 		-mcmodel=medany -mexplicit-relocs $(SPX_CFLAGS) \
 		-I$(AUDIO_ERA)/include/mini-era \
@@ -218,7 +218,7 @@ $(AUDIO_ERA_BUILD)/fft.o: $(AUDIO_ERA)/src/mini-era/fft.c
 
 $(AUDIO_ERA_BUILD)/kernels_api.o: $(AUDIO_ERA)/src/mini-era/kernels_api.c
 	@mkdir -p $(AUDIO_ERA_BUILD)
-	$(QUIET_CC) $(CROSS_COMPILE_ELF)gcc \
+	$(QUIET_CC) $(CROSS_COMPILE_ELF)gcc $(RISCV_CFLAGS) \
 		-O2 \
 		-mcmodel=medany -mexplicit-relocs $(SPX_CFLAGS) \
 		-I$(AUDIO_ERA)/include/mini-era \
