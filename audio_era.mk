@@ -238,7 +238,7 @@ $(AUDIO_ERA_BUILD)/audio_era.exe: $(AUDIO_ERA)/src/main.cpp $(AUDIO_SRCS) $(MINI
 	$(SOFT)/common/syscalls.c \
 	-T $(RISCV_TESTS)/benchmarks/common/test.ld -o $@ \
 	$(OBJ) \
-	$(AUDIO_ERA_BUILD)/uart.o $(AUDIO_SRCS) $(MINI_ERA_SRCS)\
+	$(AUDIO_ERA_BUILD)/uart.o $(AUDIO_SRCS) $(MINI_ERA_SRCS) $(AUDIO_ERA)/src/main.cpp \
 	$(SOFT_BUILD)/drivers/probe/libprobe.a \
 	$(SOFT_BUILD)/drivers/utils/baremetal/libutils.a
 
